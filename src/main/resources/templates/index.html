@@ -2,9 +2,28 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Hello</title>
+<link th:href="@{/css/default.css}" rel="stylesheet" type="text/css" />
+<title>ログイン</title>
 </head>
 <body>
-	<h1>HELLO</h1>
+	<h1 align="center">ログイン</h1>
+	<hr>
+	<div align="center">
+		<table border="0">
+		<form action="list.html" method="post">
+			<tr>
+				<th class="key-attr">ユーザID</th>
+				<td class="val-attr"><input type="text" name="user_id" size="20"></td>
+			</tr>
+			<tr>
+				<th class="key-attr">パスワード</th>
+				<td class="val-attr"><input type="password" name="password"size="20"></td>
+			</tr>
+			<tr>
+				<td colspan="2"><div align="center"><input type="submit" value="ログイン"></div></td>
+			</tr>
+		</form>
+		</table>
+	</div>
 </body>
 </html>

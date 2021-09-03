@@ -1,0 +1,16 @@
+@charset "UTF-8";
+
+* {
+	font-family:'メイリオ', 'Meiryo', sans-serif;
+}
+
+.key-attr {
+	background-color: #BAD3FF;
+	border: solid 1px;
+	padding-right: 25px;
+	text-align: left;
+}
+
+.val-attr {
+	border: solid 1px;
+}

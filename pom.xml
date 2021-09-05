@@ -34,6 +34,11 @@
 		</dependency>
 
 		<dependency>
+    		<groupId>org.springframework.boot</groupId>
+    		<artifactId>spring-boot-starter-data-jdbc</artifactId>
+		</dependency>
+
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
@@ -83,17 +88,21 @@
 
 		<!-- バリデーション -->
 		<dependency>
+              <groupId>org.springframework.boot</groupId>
+              <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+		<dependency>
 	        <groupId>javax.validation</groupId>
 	        <artifactId>validation-api</artifactId>
 	        <version>1.1.0.Final</version>
         </dependency>
 
 		<!-- hibernate -->
-        <!-- dependency>
+        <dependency>
 	        <groupId>org.hibernate</groupId>
 	        <artifactId>hibernate-validator</artifactId>
 	        <version>5.2.4.Final</version>
-        </dependency -->
+        </dependency>
 
         <!-- java.lang.ClassNotFoundException: javax.xml.bind.JAXBException対策 -->
         <dependency>
@@ -120,7 +129,7 @@
 		<!-- Thyemeleaf拡張ライブラリ（セキュリティ） -->
 		<!-- dependency>
 			<groupId>org.thymeleaf.extras</groupId>
-			<artifactId>thymeleaf-extras-springsecurity5</artifactId>
+			<artifactId>thymeleaf-extras-springsecurity4</artifactId>
 		</dependency -->
 		<!-- Spring Boot MyBatis -->
 		<dependency>

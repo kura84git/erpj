@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link th:href="@{/css/default.css}" rel="stylesheet" type="text/css" />
+<title>ログイン</title>
+</head>
+<body>
+	<h1 align="center">ログイン</h1>
+	<hr>
+	<div align="center">
+	    <div class="error-msg" th:if="${error}">ユーザ名またはパスワードが不正です。</div>
+		<table border="0">
+		<form method="post" th:action="@{/login}" th:object="${loginForm}">
+			<tr>
+				<th class="key-attr">ユーザID</th>
+				<td>
+					<div class="val-attr">
+					<input type="text" th:field="*{user_id}" name="user_id"><br/>
+					<span class="error-msg" th:if="${#fields.hasErrors('user_id')}" th:errors="*{user_id}">user_id error</span>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<th class="key-attr">パスワード</th>
+				<td>
+					<div class="val-attr">
+					<input type="text" th:field="*{password}" name="user_id"><br/>
+					<span class="error-msg" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">password error</span>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2"><div align="center"><input type="submit" value="ログイン"></div></td>
+			</tr>
+		</form>
+		</table>
+	</div>
+</body>
+</html>

@@ -14,3 +14,11 @@
 .val-attr {
 	border: solid 1px;
 }
+
+.error-msg {
+	color: red;
+}
+
+.warn-msg {
+	color: purple;
+}

@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -20,30 +22,42 @@ public class LoginController {
 	LoginUserService loginUserService;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-    public String getLogin(@ModelAttribute LoginForm form, ModelAndView model) {
-        return "login";
+    public ModelAndView getLogin(@ModelAttribute LoginForm form, ModelAndView mv) {
+        mv.setViewName("login");
+        return mv;
     }
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	private String postlogin(@ModelAttribute @Validated LoginForm form,
-			BindingResult result, ModelAndView model) {
+	private ModelAndView postlogin(@ModelAttribute @Validated LoginForm form,
+			BindingResult result, HttpSession session, ModelAndView mv) {
 		String toUrl = null;
 		
 		// エラーが発生した場合
 		if (result.hasErrors()) {
-			return getLogin(form, model);
+			return getLogin(form, mv);
 		}
 		
+		// フォーム値を元に該当するユーザを検索
 		User user = loginUserService.findUser(form.getUser_id(), form.getPassword());
 		// ユーザ名またはパスワードが不正の場合
 		if (user == null) {
-			model.addObject("error", true);
+			mv.addObject("error", true);
 			toUrl = "login";
+		// ユーザが存在する場合
 		} else {
-			model.addObject("user_name", user.getUser_name());
-			toUrl = "main";
-		}
+			// ユーザIDをセッションスコープにセット
+			session.setAttribute("user_id", user.getUser_id());
 
-		return toUrl;	
+			String user_name = user.getUser_name();
+			// ユーザ名をセッションスコープにセット
+			session.setAttribute("user_name", user_name);
+
+			mv.addObject("user_name", user_name);
+			toUrl = "top";
+		}
+		
+		mv.setViewName(toUrl);
+
+		return mv;	
 	}
 }

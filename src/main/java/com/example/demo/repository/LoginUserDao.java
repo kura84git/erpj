@@ -14,6 +14,12 @@ public class LoginUserDao {
 	@Autowired
 	JdbcTemplate jdbcTemplate;
 	
+	/**
+	 * ユーザIDとパスワードに紐づくユーザを検索する
+	 * @param user_id ユーザID
+	 * @param password パスワード
+	 * @return ユーザIDとパスワードに紐づく【usr】データ
+	 */
 	public User findUser(String user_id, String password) {
 		StringBuilder query = new StringBuilder();
 		query.append("SELECT ");

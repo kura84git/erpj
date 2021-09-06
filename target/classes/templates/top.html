@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="head :: head">
+	<meta charset="UTF-8">
+</head>
+<body>
+	<div th:replace="header :: header"></div>
+	<div class="user-name" th:text="${user_name} + ' さん'"></div><br/>
+	<div class="main" align="center">
+		こんにちは
+	</div>
+	<div th:replace="footer :: footer"></div>
+</body>
+</html>

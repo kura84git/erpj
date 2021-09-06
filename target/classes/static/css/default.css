@@ -4,6 +4,33 @@
 	font-family:'メイリオ', 'Meiryo', sans-serif;
 }
 
+.header {
+	position: fixed;
+	width: 100%;
+	top: 0;
+	margin: 0 auto;
+	text-align: center;
+}
+
+.user-name {
+	position: fixed;
+	width: 94%;
+	margin-top: 60px;
+	text-align: right;
+}
+
+.main {
+	margin-top: 100px;
+}
+
+.footer {
+	position: fixed;
+	width: 100%;
+	bottom: 0;
+	margin: 0 auto;
+	text-align: center;
+}
+
 .key-attr {
 	background-color: #BAD3FF;
 	border: solid 1px;

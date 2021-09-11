@@ -1,51 +1,100 @@
 @charset "UTF-8";
 
+/** 共通のフォント、色設定 */
 * {
 	font-family:'メイリオ', 'Meiryo', sans-serif;
 }
+body {
+	background-color: #D9E5FF;
+}
 
+/** ページ全体 */
+.wrapper {
+	display: flex;
+}
+
+/** メニュー */
+.menu-title {
+	font-weight: bold;
+}
+#ac-menu div{
+	display:block;
+	cursor:pointer;
+}
+#ac-menu div +ul{
+	display:none;
+}
+#ac-menu div:after{
+	content: '(+)';
+}
+#ac-menu div.active:after{
+	content: '(-)';
+}
+
+/** メインページ */
+.main {
+	margin: 0 auto;
+}
+
+/** ヘッダ */
 .header {
-	position: fixed;
 	width: 100%;
 	top: 0;
 	margin: 0 auto;
 	text-align: center;
 }
-
-.user-name {
-	position: fixed;
-	width: 94%;
-	margin-top: 60px;
-	text-align: right;
-}
-
-.main {
-	margin-top: 100px;
-}
-
+/** フッタ */
 .footer {
-	position: fixed;
 	width: 100%;
 	bottom: 0;
 	margin: 0 auto;
 	text-align: center;
 }
 
+/** login.html、logout.htmlに適用 */
+.login-logout-main {
+	margin-top: 100px;
+}
+
+.login-logout-footer {
+	position: fixed;
+	width: 100%;
+	bottom: 0;
+	margin: 0 auto;
+}
+
+/** top.htmlに適用 */
+.top-footer {
+	position: fixed;
+	width: 1000px;
+	bottom: 0;
+	margin: 0 auto;
+}
+
+/** ユーザ名 */
+.user-name {
+	width: 1000px;
+	margin: 0 auto;
+	text-align: right;
+}
+
+/** キー項目 */
 .key-attr {
 	background-color: #BAD3FF;
 	border: solid 1px;
 	padding-right: 25px;
 	text-align: left;
 }
-
+/** バリュー項目 */
 .val-attr {
 	border: solid 1px;
 }
 
+/** エラーメッセージ */
 .error-msg {
 	color: red;
 }
-
+/** 警告メッセージ */
 .warn-msg {
 	color: purple;
 }

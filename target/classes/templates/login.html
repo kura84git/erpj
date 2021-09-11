@@ -5,7 +5,7 @@
 </head>
 <body>
 	<div th:replace="header :: header"></div>
-	<div class="main" align="center">
+	<div class="login-logout-main" align="center">
 	    <div class="error-msg" th:if="${error}">ユーザ名またはパスワードが不正です。</div>
 		<table border="0">
 		<form method="post" th:action="@{/login}" th:object="${loginForm}">
@@ -33,6 +33,6 @@
 		</form>
 		</table>
 	</div>
-	<div th:replace="footer :: footer"></div>
+	<div class="login-logout-footer"><div th:replace="footer :: footer"></div></div>
 </body>
 </html>

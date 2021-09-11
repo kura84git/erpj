@@ -4,11 +4,15 @@
 	<meta charset="UTF-8">
 </head>
 <body>
-	<div th:replace="header :: header"></div>
-	<div class="user-name" th:text="${user_name} + ' さん'"></div><br/>
-	<div class="main" align="center">
-		こんにちは
+	<div class="wrapper">
+		<div class="menu">
+      		<iframe th:src="@{/menu}" width="230" height="550" frameborder="0"></iframe>
+    	</div>
+    	<div class="main">
+			<div th:replace="header :: header"></div>
+			<div class="user-name" th:text="${user_name} + ' さん'"></div>
+			<div class="top-footer"><div th:replace="footer :: footer"></div></div>
+		</div>
 	</div>
-	<div th:replace="footer :: footer"></div>
 </body>
 </html>

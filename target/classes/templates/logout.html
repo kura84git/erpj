@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="head :: head">
+	<meta charset="UTF-8">
+</head>
+<body>
+	<div th:replace="header :: header"></div>
+	<div class="login-logout-main" align="center">
+	    <p>ログアウトしました。</p>
+	    <a th:href="@{/login}">ログイン</a>
+	<div class="login-logout-footer"><div th:replace="footer :: footer"></div></div>
+</body>
+</html>

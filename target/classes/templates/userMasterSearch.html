@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="head :: head">
+	<meta charset="UTF-8">
+</head>
+<body>
+	<div class="wrapper">
+		<div class="menu">
+      		<iframe th:src="@{/menu}" width="230" height="550" frameborder="0"></iframe>
+    	</div>
+    	<div class="main">
+			<div th:replace="header :: header"></div>
+			<div class="user-name" th:text="${user_name} + ' さん'"></div>
+			<div class="error-msg" th:if="${error}">データが存在しません。</div>
+			<form method="post" th:action="@{/userMasterSearch}" th:object="${userMasterForm}">
+			<table border="1">
+				<tr>
+					<th class="key-attr">ユーザID</th>
+					<td>
+						<div class="val-attr">
+						<input type="text" th:field="*{user_id}" name="user_id"><br/>
+						<span class="error-msg" th:if="${#fields.hasErrors('user_id')}" th:errors="*{user_id}">user_id error</span>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<th class="key-attr">ユーザ名</th>
+					<td>
+						<div class="val-attr">
+						<input type="user_name" th:field="*{user_name}" name="user_name"><br/>
+						<span class="error-msg" th:if="${#fields.hasErrors('user_name')}" th:errors="*{user_name}">user_name error</span>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<th class="key-attr">権限</th>
+					<td>
+						<label th:each="item:${authority_checkbox}">
+							<input type="checkbox" name="authority_checkbox" th:value="${item.key}" th:text="${item.value}">
+						</label>
+					</td>
+				</tr>
+				<tr>
+					<th class="key-attr">正規／削除済</th>
+					<td>
+						<label th:each="item:${live_del_checkbox}">
+							<input type="checkbox" name="live_del_checkbox" th:value="${item.key}" th:text="${item.value}">
+						</label>
+					</td>
+				</tr>
+			</table>
+			<br/>
+			<input type="submit" value="検索">
+			</form>
+			<div class="top-footer"><div th:replace="footer :: footer"></div></div>
+		</div>
+	</div>
+</body>
+</html>

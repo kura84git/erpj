@@ -3,9 +3,12 @@ user_id VARCHAR(20) PRIMARY KEY NOT NULL
 , user_name VARCHAR(50) NOT NULL
 , password VARCHAR(20) NOT NULL
 , del_flg VARCHAR(20)
+, authority VARCHAR(7)
 );
 
 INSERT INTO usr
-(user_id, user_name, password, del_flg)
-VALUES ('kura01', 'くら', 'guest', 'kura01')
-, ('admin', '管理者', 'guest', 'admin');
+(user_id, user_name, password, del_flg, authority)
+VALUES ('kura01', 'くら', 'guest', 'kura01', 'ADMIN')
+, ('admin', '管理者', 'guest', 'admin', 'ADMIN')
+, ('null', 'ぬる', 'guest', null, 'ADMIN')
+, ('kura02', 'くら(一般)', 'guest', 'kura02', 'GENERAL');

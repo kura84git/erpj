@@ -47,7 +47,7 @@ public class UserMasterController {
     }
 	
 	@RequestMapping(value = "/userMasterSearch", method = RequestMethod.POST)
-	private ModelAndView postuserMasterSearch(@ModelAttribute @Validated UserMasterForm form,
+	private ModelAndView postUserMasterSearch(@ModelAttribute @Validated UserMasterForm form,
 			BindingResult result, HttpSession session, ModelAndView mv) {
 		
 		// エラーが発生した場合

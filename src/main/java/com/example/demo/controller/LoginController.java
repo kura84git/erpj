@@ -22,7 +22,7 @@ public class LoginController {
 	LoginUserService loginUserService;
 	
 	@RequestMapping(value = {"/", "/login"}, method = RequestMethod.GET)
-    public ModelAndView getLogin(@ModelAttribute LoginForm form, ModelAndView mv) {
+    private ModelAndView getLogin(@ModelAttribute LoginForm form, ModelAndView mv) {
         mv.setViewName("login");
         return mv;
     }
@@ -47,6 +47,8 @@ public class LoginController {
 		} else {
 			// ユーザIDをセッションスコープにセット
 			session.setAttribute("user_id", user.getUser_id());
+			// 権限をセッションスコープにセット
+			session.setAttribute("authority", user.getAuthority());
 
 			String user_name = user.getUser_name();
 			// ユーザ名をセッションスコープにセット

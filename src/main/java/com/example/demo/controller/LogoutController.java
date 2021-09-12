@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class LogoutController {
 	
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
-	private String postlogin(HttpSession session) {
+	private String getLogout(HttpSession session) {
 		// セッション破棄
 		session.invalidate();
 		

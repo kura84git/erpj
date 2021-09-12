@@ -27,6 +27,7 @@ public class LoginUserDao {
 		query.append("	, usr.user_name ");
 		query.append("	, usr.password ");
 		query.append("	, usr.del_flg ");
+		query.append("	, usr.authority ");
 		query.append("FROM ");
 		query.append("	usr ");
 		query.append("WHERE ");
@@ -41,6 +42,7 @@ public class LoginUserDao {
 			user.setUser_name((String) map.get("user_name"));
 			user.setPassword((String) map.get("password"));
 			user.setDel_flg((String) map.get("del_flg"));
+			user.setAuthority((String) map.get("authority"));
 
 			return user;
 		// データが0件だった場合

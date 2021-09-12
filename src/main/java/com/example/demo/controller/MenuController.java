@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class MenuController {
 	
 	@RequestMapping(value = "/menu", method = RequestMethod.GET)
-    public String getLogin() {
+    private String getMenu() {
         return "menu";
     }
 }

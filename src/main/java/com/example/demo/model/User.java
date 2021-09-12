@@ -20,9 +20,12 @@ public class User {
 	@Column(name = "user_name")
 	private String user_name;
 	
-	@Column(name="password")
+	@Column(name = "password")
 	private String password;
 
-	@Column(name="del_flg")
+	@Column(name = "del_flg")
 	private String del_flg;
+	
+	@Column(name = "authority")
+	private String authority;
 }

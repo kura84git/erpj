@@ -25,7 +25,6 @@ public class LoginUserDao {
 		query.append("SELECT ");
 		query.append("	usr.user_id ");
 		query.append("	, usr.user_name ");
-		query.append("	, usr.password ");
 		query.append("	, usr.del_flg ");
 		query.append("	, usr.authority ");
 		query.append("FROM ");
@@ -40,7 +39,6 @@ public class LoginUserDao {
 			User user = new User();
 			user.setUser_id((String) map.get("user_id"));
 			user.setUser_name((String) map.get("user_name"));
-			user.setPassword((String) map.get("password"));
 			user.setDel_flg((String) map.get("del_flg"));
 			user.setAuthority((String) map.get("authority"));
 

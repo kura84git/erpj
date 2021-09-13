@@ -11,6 +11,10 @@
     	<div class="main">
 			<div th:replace="header :: header"></div>
 			<div class="user-name" th:text="${user_name} + ' さん'"></div>
+			<div class="sub-menu">
+				<a th:href="@{/userMasterReg}">登録</a>
+				<a th:href="@{/userMaster}">検索</a>
+			</div>
 			<form method="post" th:action="@{/userMasterSearch}" th:object="${userMasterForm}">
 			<table border="1">
 				<tr>
@@ -53,7 +57,7 @@
 			</form>
 			<br/>
 			<div th:text="${recordCount}">件数</div>
-			<table>
+			<table border="1">
 				<tr>
 					<th class="key-attr">ユーザID</th>
 					<th class="key-attr">ユーザ名</th>
@@ -61,7 +65,7 @@
 					<th class="key-attr">正規／削除済</th>
 				</tr>
 				<tr th:each="user:${userList}">
-					<td th:text="${user.user_id}" class="val-attr"></td>
+					<td class="val-attr"><a th:text="${user.user_id}" th:href="@{|/userMasterDetail/${user.user_id}|}"></a></td>
 					<td th:text="${user.user_name}" class="val-attr"></td>
 					<td th:if="${user.authority == 'ADMIN'}" class="val-attr">管理者</td>
 					<td th:if="${user.authority == 'GENERAL'}" class="val-attr">一般ユーザ</td>

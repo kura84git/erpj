@@ -78,6 +78,14 @@ body {
 	text-align: right;
 }
 
+/** サブメニュー */
+.sub-menu {
+	display: flex;
+	gap: 0px 50px;
+	margin-bottom: 25px;
+	font-weight: bold;
+}
+
 /** キー項目 */
 .key-attr {
 	background-color: #BAD3FF;

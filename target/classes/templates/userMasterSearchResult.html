@@ -35,7 +35,7 @@
 					<th class="key-attr">権限</th>
 					<td>
 						<label th:each="item:${authority_checkbox}">
-							<input type="checkbox" name="authority_checkbox" th:value="${item.key}" th:text="${item.value}">
+							<input type="checkbox" th:field="*{authority_checkbox}" name="authority_checkbox" th:value="${item.key}" th:text="${item.value}">
 						</label>
 					</td>
 				</tr>
@@ -43,7 +43,7 @@
 					<th class="key-attr">正規／削除済</th>
 					<td>
 						<label th:each="item:${live_del_checkbox}">
-							<input type="checkbox" name="live_del_checkbox" th:value="${item.key}" th:text="${item.value}">
+							<input type="checkbox" th:field="*{live_del_checkbox}" name="live_del_checkbox" th:value="${item.key}" th:text="${item.value}">
 						</label>
 					</td>
 				</tr>

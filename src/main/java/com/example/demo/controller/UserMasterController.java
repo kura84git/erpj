@@ -40,6 +40,9 @@ public class UserMasterController {
 		// 正規ユーザ／削除済ユーザチェックボックス
 		mv.addObject("live_del_checkbox", getLiveDelCheckBox());
 		
+		// フォーム入力値
+		mv.addObject("userMasterForm", form);
+		
 		// ユーザ名をModelAndViewにセット
 		ControllerUtil.setUserNameToModelAndView(session, mv);
 		mv.setViewName(toUrl);
@@ -75,6 +78,9 @@ public class UserMasterController {
 		
 		// 正規ユーザ／削除済ユーザチェックボックス
 		mv.addObject("live_del_checkbox", getLiveDelCheckBox());
+		
+		// フォーム入力値
+		mv.addObject("userMasterForm", form);
 		
 		// ユーザ名をModelAndViewにセット
 		ControllerUtil.setUserNameToModelAndView(session, mv);

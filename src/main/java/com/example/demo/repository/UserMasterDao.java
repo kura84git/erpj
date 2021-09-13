@@ -31,7 +31,6 @@ public class UserMasterDao {
 		query.append("SELECT ");
 		query.append("	usr.user_id ");
 		query.append("	, usr.user_name ");
-		query.append("	, usr.password ");
 		query.append("	, usr.del_flg ");
 		query.append("	, usr.authority ");
 		query.append("FROM ");
@@ -45,8 +44,8 @@ public class UserMasterDao {
 		// ユーザIDが入力されている場合
 		if (!user_id.isEmpty()) {
 			query.append("WHERE ");
-			query.append("	usr.user_id = ? ");
-			args.add(user_id);
+			query.append("	usr.user_id LIKE ? ");
+			args.add("%" + user_id + "%");
 			existsCondition = true;
 		}
 		
@@ -58,8 +57,8 @@ public class UserMasterDao {
 				query.append("WHERE ");
 				existsCondition = true;
 			}
-			query.append("	usr.user_name = ? ");
-			args.add(user_id);
+			query.append("	usr.user_name LIKE ? ");
+			args.add("%" + user_name + "%");
 		}
 		
 		// 権限チェックボックスがチェックされている場合
@@ -124,7 +123,6 @@ public class UserMasterDao {
 
 				user.setUser_id((String) map.get("user_id"));
 				user.setUser_name((String) map.get("user_name"));
-				user.setPassword((String) map.get("password"));
 				user.setDel_flg((String) map.get("del_flg"));
 				user.setAuthority((String) map.get("authority"));
 				result.add(user);
@@ -160,8 +158,8 @@ public class UserMasterDao {
 		// ユーザIDが入力されている場合
 		if (!user_id.isEmpty()) {
 			query.append("WHERE ");
-			query.append("	usr.user_id = ? ");
-			args.add(user_id);
+			query.append("	usr.user_id LIKE ? ");
+			args.add("%" + user_id + "%");
 			existsCondition = true;
 		}
 		
@@ -173,8 +171,8 @@ public class UserMasterDao {
 				query.append("WHERE ");
 				existsCondition = true;
 			}
-			query.append("	usr.user_name = ? ");
-			args.add(user_id);
+			query.append("	usr.user_name LIKE ? ");
+			args.add("%" + user_name + "%");
 		}
 		
 		// 権限チェックボックスがチェックされている場合

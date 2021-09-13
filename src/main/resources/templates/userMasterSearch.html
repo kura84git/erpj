@@ -11,6 +11,10 @@
     	<div class="main">
 			<div th:replace="header :: header"></div>
 			<div class="user-name" th:text="${user_name} + ' さん'"></div>
+			<div class="sub-menu">
+				<a th:href="@{/userMasterReg}">登録</a>
+				<a th:href="@{/userMaster}">検索</a>
+			</div>
 			<div class="error-msg" th:if="${error}">データが存在しません。</div>
 			<form method="post" th:action="@{/userMasterSearch}" th:object="${userMasterForm}">
 			<table border="1">

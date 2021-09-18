@@ -3,7 +3,7 @@ package com.example.demo.model;
 import lombok.Data;
 
 @Data
-public class UserMasterForm {
+public class UserMasterSearchForm {
 	private String user_id;
 
 	private String user_name;

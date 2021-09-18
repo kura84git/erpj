@@ -15,7 +15,7 @@ public class LoginUserService {
 	 * ユーザIDとパスワードに紐づくユーザを検索する
 	 * @param user_id ユーザID
 	 * @param password パスワード
-	 * @return ユーザIDとパスワードに紐づく【usr】データ
+	 * @return ユーザIDとパスワードに紐づく【ユーザ】データ
 	 */
 	public User findUser(String user_id, String password) {
 		return userDao.findUser(user_id, password);

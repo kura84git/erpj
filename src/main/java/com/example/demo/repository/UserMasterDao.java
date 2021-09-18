@@ -24,7 +24,7 @@ public class UserMasterDao {
 	 * @param user_name ユーザ名
 	 * @param authority_checkbox 権限チェックボックス
 	 * @param live_del_checkbox 正規ユーザ／削除済ユーザチェックボックス
-	 * @return 検索条件に紐づく【usr】データ
+	 * @return 検索条件に紐づく【ユーザ】データ
 	 */
 	public List<User> findUser(String user_id, String user_name, String[] authority_checkbox, String[] live_del_checkbox) {
 		StringBuilder query = new StringBuilder();
@@ -140,7 +140,7 @@ public class UserMasterDao {
 	 * @param user_name ユーザ名
 	 * @param authority_checkbox 権限チェックボックス
 	 * @param live_del_checkbox 正規ユーザ／削除済ユーザチェックボックス
-	 * @return 検索条件に紐づく【usr】データ件数
+	 * @return 検索条件に紐づく【ユーザ】データ件数
 	 */
 	@SuppressWarnings("deprecation")
 	public int findUserCount(String user_id, String user_name, String[] authority_checkbox, String[] live_del_checkbox) {
@@ -228,5 +228,59 @@ public class UserMasterDao {
 		}
 		
 		return jdbcTemplate.queryForObject(query.toString(), args.toArray(), Integer.class);
+	}
+	
+	/**
+	 * ユーザの存在チェック
+	 * @param user_id ユーザID
+	 * @return ユーザが存在する場合はtrue、存在しない場合はfalse
+	 */
+	@SuppressWarnings("deprecation")
+	public boolean existsUser(String user_id) {
+		StringBuilder query = new StringBuilder();
+		query.append("SELECT ");
+		query.append("	1 ");
+		query.append("FROM ");
+		query.append("	usr ");
+		query.append("WHERE ");
+		query.append("	usr.user_id = ? ");
+		
+		try {
+			jdbcTemplate.queryForObject(query.toString(), new String[] {user_id}, Integer.class);
+			
+			return true;
+		// データが0件だった場合
+		} catch (EmptyResultDataAccessException e) {
+			return false;
+		}
+	}
+	
+	/**
+	 * ユーザを登録する
+	 * @param user_id ユーザID
+	 * @param user_name ユーザ名
+	 * @param password パスワード
+	 * @param authority_radiobutton 権限ラジオボタン
+	 * @return 登録に成功した場合はtrue、失敗した場合はfalse
+	 */
+	public int insUser(String user_id, String user_name, String password, String[] authority_radiobutton) {
+		StringBuilder query = new StringBuilder();
+		query.append("INSERT INTO ");
+		query.append("	usr( ");
+		query.append("		user_id ");
+		query.append("		, user_name ");
+		query.append("		, password ");
+		query.append("		, del_flg ");
+		query.append("		, authority ");
+		query.append("	) ");
+		query.append("	VALUES( ");
+		query.append("		? ");
+		query.append("		, ? ");
+		query.append("		, ? ");
+		query.append("		, ? ");
+		query.append("		, ? ");
+		query.append("	) ");
+		
+		return jdbcTemplate.update(query.toString(), user_id, user_name, password, user_id, authority_radiobutton[0].toUpperCase());
 	}
 }

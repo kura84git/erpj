@@ -15,8 +15,8 @@
 				<a th:href="@{/userMasterReg}">登録</a>
 				<a th:href="@{/userMaster}">検索</a>
 			</div>
-			<div class="error-msg" th:if="${error}">データが存在しません。</div>
-			<form method="post" th:action="@{/userMasterSearch}" th:object="${userMasterSearchForm}">
+			<div class="error-msg" th:if="${error_userExists}">ユーザが既に存在します。</div>
+			<form method="post" th:action="@{/userMasterRegConfirm}" th:object="${userMasterRegForm}">
 			<table border="1">
 				<tr>
 					<th class="key-attr">ユーザID</th>
@@ -37,24 +37,25 @@
 					</td>
 				</tr>
 				<tr>
-					<th class="key-attr">権限</th>
+					<th class="key-attr">パスワード</th>
 					<td>
-						<label th:each="item:${authority_checkbox}">
-							<input type="checkbox" th:field="*{authority_checkbox}" name="authority_checkbox" th:value="${item.key}" th:text="${item.value}">
-						</label>
+						<div class="val-attr">
+						<input type="password" th:field="*{password}" name="password"><br/>
+						<span class="error-msg" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">password error</span>
+						</div>
 					</td>
 				</tr>
 				<tr>
-					<th class="key-attr">正規／削除済</th>
+					<th class="key-attr">権限</th>
 					<td>
-						<label th:each="item:${live_del_checkbox}">
-							<input type="checkbox" th:field="*{live_del_checkbox}" name="live_del_checkbox" th:value="${item.key}" th:text="${item.value}">
+						<label th:each="item:${authority_radiobutton}">
+							<input type="radio" th:field="*{authority_radiobutton}" name="authority_radiobutton" th:value="${item.key}" th:text="${item.value}">
 						</label>
 					</td>
 				</tr>
 			</table>
 			<br/>
-			<input type="submit" value="検索">
+			<input type="submit" value="確認">
 			</form>
 			<div class="top-footer"><div th:replace="footer :: footer"></div></div>
 		</div>

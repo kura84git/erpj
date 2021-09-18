@@ -11,7 +11,7 @@
     	<div class="main">
 			<div th:replace="header :: header"></div>
 			<div class="user-name" th:text="${user_name} + ' さん'"></div>
-			<p class="error-msg">権限がありません。</p>
+			<div class="error-msg" th:if="${error}"></div>
 			<div class="top-footer"><div th:replace="footer :: footer"></div></div>
 		</div>
 	</div>

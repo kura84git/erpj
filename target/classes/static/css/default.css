@@ -63,7 +63,7 @@ body {
 	margin: 0 auto;
 }
 
-/** top.htmlに適用 */
+/** フッタを固定させる場合に適用 */
 .top-footer {
 	position: fixed;
 	width: 1000px;
@@ -84,6 +84,12 @@ body {
 	gap: 0px 50px;
 	margin-bottom: 25px;
 	font-weight: bold;
+}
+
+/** ボタンラッパ */
+.button-wrapper {
+	display: flex;
+	gap: 0px 20px;
 }
 
 /** キー項目 */

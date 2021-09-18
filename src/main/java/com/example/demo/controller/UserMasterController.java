@@ -26,6 +26,13 @@ public class UserMasterController {
 	@Autowired
 	UserMasterService userMasterService;
 	
+	/**
+	 * ユーザメンテナンス検索画面
+	 * @param form UserMasterSearchForm
+	 * @param session HttpSession
+	 * @param mv ModelAndView
+	 * @return ModelAndView
+	 */
 	@RequestMapping(value = {"/userMaster", "/userMasterSearch"}, method = RequestMethod.GET)
     private ModelAndView getUserMaster(@ModelAttribute UserMasterSearchForm form, HttpSession session, ModelAndView mv) {
 		String toUrl = "userMasterSearch";
@@ -51,6 +58,14 @@ public class UserMasterController {
         return mv;
     }
 	
+	/**
+	 * ユーザメンテナンス検索画面検索時
+	 * @param form UserMasterSearchForm
+	 * @param result BindingResult
+	 * @param session HttpSession
+	 * @param mv ModelAndView
+	 * @return ModelAndView
+	 */
 	@RequestMapping(value = "/userMasterSearch", method = RequestMethod.POST)
 	private ModelAndView postUserMasterSearch(@ModelAttribute @Validated UserMasterSearchForm form,
 			BindingResult result, HttpSession session, ModelAndView mv) {
@@ -90,8 +105,16 @@ public class UserMasterController {
 		return mv;	
 	}
 	
+	/**
+	 * ユーザメンテナンス登録画面
+	 * @param form UserMasterRegForm
+	 * @param session HttpSession
+	 * @param mv ModelAndView
+	 * @return ModelAndView
+	 */
 	@RequestMapping(value = "userMasterReg", method = RequestMethod.GET)
-    private ModelAndView getUserMasterReg(@ModelAttribute UserMasterRegForm form, HttpSession session, ModelAndView mv) {
+    private ModelAndView getUserMasterReg(@ModelAttribute UserMasterRegForm form,
+    		HttpSession session, ModelAndView mv) {
 		// 権限ラジオボタン
 		mv.addObject("authority_radiobutton", getAuthorityRadiobutton());
 		
@@ -107,6 +130,14 @@ public class UserMasterController {
         return mv;
     }
 	
+	/**
+	 * ユーザメンテナンス登録確認画面
+	 * @param form UserMasterRegForm
+	 * @param result BindingResult
+	 * @param session HttpSession
+	 * @param mv ModelAndView
+	 * @return ModelAndView
+	 */
 	@RequestMapping(value = "/userMasterRegConfirm", method = RequestMethod.POST)
 	private ModelAndView postUserMasterRegConfirm(@ModelAttribute @Validated UserMasterRegForm form,
 			BindingResult result, HttpSession session, ModelAndView mv) {
@@ -146,8 +177,16 @@ public class UserMasterController {
 		return mv;	
 	}
 	
+	/**
+	 * ユーザメンテナンス登録確認画面中止ボタン押下時
+	 * @param form UserMasterRegForm
+	 * @param session HttpSession
+	 * @param mv ModelAndView
+	 * @return ModelAndView
+	 */
 	@RequestMapping(value = "userMasterRegConfirm/cancel", method = RequestMethod.GET)
-    private ModelAndView getUserMasterRegConfirmCancel(@ModelAttribute UserMasterRegForm form, HttpSession session, ModelAndView mv) {
+    private ModelAndView getUserMasterRegConfirmCancel(@ModelAttribute UserMasterRegForm form,
+    		HttpSession session, ModelAndView mv) {
 		// 権限ラジオボタン
 		mv.addObject("authority_radiobutton", getAuthorityRadiobutton());
 		
@@ -160,6 +199,14 @@ public class UserMasterController {
         return mv;
     }
 	
+	/**
+	 * ユーザメンテナンス登録確認画面登録ボタン押下時
+	 * @param form UserMasterRegForm
+	 * @param result BindingResult
+	 * @param session HttpSession
+	 * @param mv ModelAndView
+	 * @return ModelAndView
+	 */
 	@RequestMapping(value = "/userMasterReg", method = RequestMethod.POST)
 	private ModelAndView postUserMasterReg(@ModelAttribute @Validated UserMasterRegForm form,
 			BindingResult result, HttpSession session, ModelAndView mv) {
@@ -169,7 +216,10 @@ public class UserMasterController {
 		form = (UserMasterRegForm) session.getAttribute("userMasterRegForm");
 		
 		// ユーザを登録
-		if (userMasterService.insUser(form.getUser_id(), form.getUser_name(), form.getPassword(), form.getAuthority_radiobutton()) != 1) {
+		if (userMasterService.insUser(form.getUser_id(),
+				form.getUser_name(),
+				form.getPassword(),
+				form.getAuthority_radiobutton()) != 1) {
 			mv.addObject("error", "処理に失敗しました。");
 			toUrl = "failure";
 		}

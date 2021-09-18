@@ -52,7 +52,7 @@ public class UserMasterService {
 	 * @param user_name ユーザ名
 	 * @param password　パスワード
 	 * @param authority_radiobutton 権限ラジオボタン
-	 * @return 登録に成功した場合はtrue、失敗した場合はfalse
+	 * @return 登録に成功した場合は1
 	 */
 	public int insUser(String user_id, String user_name, String password, String[] authority_radiobutton) {
 		return userMasterDao.insUser(user_id, user_name, password, authority_radiobutton);

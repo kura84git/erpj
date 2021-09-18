@@ -10,6 +10,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class LogoutController {
 	
+	/**
+	 * ログアウト画面
+	 * @param session HttpSession
+	 * @return logout.htmlに遷移
+	 */
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	private String getLogout(HttpSession session) {
 		// セッション破棄

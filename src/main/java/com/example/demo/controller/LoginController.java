@@ -21,12 +21,26 @@ public class LoginController {
 	@Autowired
 	LoginUserService loginUserService;
 	
+	/**
+	 * ログイン画面
+	 * @param form LoginForm
+	 * @param mv ModelAndView
+	 * @return ModelAndView
+	 */
 	@RequestMapping(value = {"/", "/login"}, method = RequestMethod.GET)
     private ModelAndView getLogin(@ModelAttribute LoginForm form, ModelAndView mv) {
         mv.setViewName("login");
         return mv;
     }
 	
+	/**
+	 * ログイン画面ログイン時
+	 * @param form LoginForm
+	 * @param result BindingResult
+	 * @param session HttpSession
+	 * @param mv ModelAndView
+	 * @return ModelAndView
+	 */
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	private ModelAndView postlogin(@ModelAttribute @Validated LoginForm form,
 			BindingResult result, HttpSession session, ModelAndView mv) {

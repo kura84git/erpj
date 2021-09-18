@@ -57,4 +57,13 @@ public class UserMasterService {
 	public int insUser(String user_id, String user_name, String password, String[] authority_radiobutton) {
 		return userMasterDao.insUser(user_id, user_name, password, authority_radiobutton);
 	}
+	
+	/**
+	 * ユーザIDに紐づくユーザ情報を取得する
+	 * @param user_id ユーザID
+	 * @return ユーザIDに紐づく【ユーザ】データ
+	 */
+	public User getUserInfo(String user_id) {
+		return userMasterDao.getUserInfo(user_id);
+	}
 }

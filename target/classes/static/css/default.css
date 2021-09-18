@@ -78,6 +78,15 @@ body {
 	text-align: right;
 }
 
+/** メインメニュー */
+.main-menu {
+	display: flex;
+	gap: 0px 50px;
+	margin-bottom: 25px;
+	font-weight: bold;
+	font-size: 25px;
+}
+
 /** サブメニュー */
 .sub-menu {
 	display: flex;

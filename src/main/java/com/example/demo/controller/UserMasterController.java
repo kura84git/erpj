@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -240,6 +241,31 @@ public class UserMasterController {
 		mv.setViewName(toUrl);
 		return mv;	
 	}
+	
+	/**
+	 * ユーザメンテナンス照会画面
+	 * @param user_id ユーザID
+	 * @param session HttpSession
+	 * @param mv ModelAndView
+	 * @return ModelAndView
+	 */
+	@RequestMapping(value = "userMasterDetail/{user_id}", method = RequestMethod.GET)
+    private ModelAndView getUserMasterDetail(@PathVariable("user_id") String user_id,
+    		HttpSession session, ModelAndView mv) {
+		// ユーザ情報を取得
+		User user = userMasterService.getUserInfo(user_id);
+		
+		// ユーザ情報をセット
+		mv.addObject("userMasterDetail", user);
+		
+		// ユーザ情報をセッションスコープにセット
+		session.setAttribute("userMasterDetail", user);
+		
+		// ユーザ名をModelAndViewにセット
+		ControllerUtil.setUserNameToModelAndView(session, mv);
+		mv.setViewName("userMasterDetail");
+        return mv;
+    }
 	
 	/**
 	 * 権限チェックボックスを取得する

@@ -15,9 +15,10 @@
 				<a th:href="@{/userMasterReg}">登録</a>
 				<a th:href="@{/userMaster}">検索</a>
 			</div>
-			<div>データを登録してもよろしいですか?</div>
-			<form method="post" th:action="@{/userMasterReg}" th:object="${userMasterRegForm}">
-			<table border="1">
+			<div class="sub-menu">
+				<a th:href="@{/userMasterUpd}">更新</a>
+			</div>
+			<table border="1" th:object="${userMasterDetail}">
 				<tr>
 					<th class="key-attr">ユーザID</th>
 					<td th:text="*{user_id}" class="val-attr"></td>
@@ -31,15 +32,15 @@
 					<td th:text="*{password}" class="val-attr"></td>
 				<tr>
 					<th class="key-attr">権限</th>
-					<td th:text="${authority}" class="val-attr"></td>
+					<td th:if="*{authority == 'ADMIN'}" class="val-attr">管理者</td>
+					<td th:if="*{authority == 'GENERAL'}" class="val-attr">一般ユーザ</td>
+				</tr>
+				<tr>
+					<th class="key-attr">正規／削除済</th>
+					<td th:if="*{del_flg != null}" class="val-attr">正規</td>
+					<td th:if="*{del_flg == null}" class="val-attr">削除済</td>
 				</tr>
 			</table>
-			<br/>
-			<div class="button-wrapper">
-				<input type="submit" value="登録">
-				<input type="button" value="中止" th:onclick="'window.location.href=\'/userMasterRegConfirm/cancel\''">
-			</div>
-			</form>
 			<div class="top-footer"><div th:replace="footer :: footer"></div></div>
 		</div>
 	</div>

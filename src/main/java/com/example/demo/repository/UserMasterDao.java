@@ -283,4 +283,38 @@ public class UserMasterDao {
 		
 		return jdbcTemplate.update(query.toString(), user_id, user_name, password, user_id, authority_radiobutton[0].toUpperCase());
 	}
+	
+	/**
+	 * ユーザIDに紐づくユーザ情報を取得する
+	 * @param user_id ユーザID
+	 * @return ユーザIDに紐づく【ユーザ】データ
+	 */
+	public User getUserInfo(String user_id) {
+		StringBuilder query = new StringBuilder();
+		query.append("SELECT ");
+		query.append("	usr.user_id ");
+		query.append("	, usr.user_name ");
+		query.append("	, usr.password ");
+		query.append("	, usr.del_flg ");
+		query.append("	, usr.authority ");
+		query.append("FROM ");
+		query.append("	usr ");
+		query.append("WHERE ");
+		query.append("	usr.user_id = ? ");
+		
+		try {
+			Map<String, Object> map = jdbcTemplate.queryForMap(query.toString(), user_id);
+			User user = new User();
+			user.setUser_id((String) map.get("user_id"));
+			user.setUser_name((String) map.get("user_name"));
+			user.setPassword((String) map.get("password"));
+			user.setDel_flg((String) map.get("del_flg"));
+			user.setAuthority((String) map.get("authority"));
+
+			return user;
+		// データが0件だった場合
+		} catch (EmptyResultDataAccessException e) {
+			return null;
+		}
+	}
 }

@@ -66,4 +66,18 @@ public class UserMasterService {
 	public User getUserInfo(String user_id) {
 		return userMasterDao.getUserInfo(user_id);
 	}
+	
+	/**
+	 * ユーザを更新する
+	 * @param user_id ユーザID
+	 * @param user_name ユーザ名
+	 * @param password　パスワード
+	 * @param authority_radiobutton 権限ラジオボタン
+	 * @param live_del_radiobutton 正規ユーザ／削除ユーザラジオボタン
+	 * @return 更新に成功した場合は1
+	 */
+	public int updUser(String user_id, String user_name, String password,
+			String[] authority_radiobutton, String[] live_del_radiobutton) {
+		return userMasterDao.updUser(user_id, user_name, password, authority_radiobutton, live_del_radiobutton);
+	}
 }

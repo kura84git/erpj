@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.example.demo.model.User;
 import com.example.demo.model.UserMasterRegForm;
 import com.example.demo.model.UserMasterSearchForm;
+import com.example.demo.model.UserMasterUpdForm;
 import com.example.demo.service.UserMasterService;
 
 
@@ -39,7 +40,7 @@ public class UserMasterController {
 		String toUrl = "userMasterSearch";
 		
 		// 管理者ユーザでない場合
-		if (!session.getAttribute("authority").equals("ADMIN")) {
+		if (!session.getAttribute("login_user_authority").equals("ADMIN")) {
 			mv.addObject("error", "権限がありません。");
 			toUrl = "failure";
 		}
@@ -258,14 +259,223 @@ public class UserMasterController {
 		// ユーザ情報をセット
 		mv.addObject("userMasterDetail", user);
 		
-		// ユーザ情報をセッションスコープにセット
-		session.setAttribute("userMasterDetail", user);
-		
 		// ユーザ名をModelAndViewにセット
 		ControllerUtil.setUserNameToModelAndView(session, mv);
 		mv.setViewName("userMasterDetail");
         return mv;
     }
+	
+	/**
+	 * ユーザメンテナンス更新画面
+	 * @param user_id ユーザID
+	 * @param form UserMasterUpdForm
+	 * @param session HttpSession
+	 * @param mv ModelAndView
+	 * @return ModelAndView
+	 */
+	@RequestMapping(value = "userMasterUpd/{user_id}", method = RequestMethod.GET)
+    private ModelAndView getUserMasterUpd(@PathVariable("user_id") String user_id,
+    		@ModelAttribute UserMasterUpdForm form, HttpSession session, ModelAndView mv) {
+		// ユーザ情報を取得
+		User user = userMasterService.getUserInfo(user_id);
+		
+		// 権限ラジオボタン
+		mv.addObject("authority_radiobutton", getAuthorityRadiobutton());
+		// 正規／削除済ラジオボタン
+		mv.addObject("live_del_radiobutton", getLiveDelRadiobutton());
+		
+		// ユーザ情報をセット
+		mv.addObject("user_id", user_id);
+		mv.addObject("user_name", user.getUser_name());
+		mv.addObject("password", user.getPassword());
+		form.setAuthority_radiobutton(new String[] {user.getAuthority().toLowerCase()});
+		// 正規ユーザの場合
+		if (user.getDel_flg() != null) {
+			form.setLive_del_radiobutton(new String[] {"live"});
+		// 削除済ユーザの場合
+		} else {
+			form.setLive_del_radiobutton(new String[] {"del"});
+		}
+		
+		// ユーザ名をModelAndViewにセット
+		ControllerUtil.setUserNameToModelAndView(session, mv);
+		mv.setViewName("userMasterUpd");
+        return mv;
+    }
+	
+	/**
+	 * ユーザメンテナンス更新確認画面
+	 * @param form UserMasterUpdForm
+	 * @param result BindingResult
+	 * @param session HttpSession
+	 * @param mv ModelAndView
+	 * @return ModelAndView
+	 */
+	@RequestMapping(value = "/userMasterUpdConfirm", method = RequestMethod.POST)
+	private ModelAndView postUserMasterUpdConfirm(@ModelAttribute @Validated UserMasterUpdForm form,
+			BindingResult result, HttpSession session, ModelAndView mv) {
+		String toUrl = "userMasterUpdConfirm";
+		// エラーが発生した場合
+		if (result.hasErrors()) {
+			toUrl = "userMasterUpd";
+			// ユーザID
+			mv.addObject("user_id", form.getUser_id());
+			// ユーザ名
+			mv.addObject("user_name", form.getUser_name());
+			// パスワード
+			mv.addObject("password", form.getPassword());
+			// 権限ラジオボタン
+			mv.addObject("authority_radiobutton", getAuthorityRadiobutton());
+			// 正規／削除済ユーザラジオボタン
+			mv.addObject("live_del_radiobutton", getLiveDelRadiobutton());
+		}
+		
+		// 自身を一般ユーザに変更した場合 または 自身を削除ユーザに変更した場合
+		if (session.getAttribute("login_user_id").equals(form.getUser_id())
+				&& (form.getAuthority_radiobutton()[0].equals("general")
+					|| form.getLive_del_radiobutton()[0].equals("del"))) {
+			toUrl = "userMasterUpd";
+			mv.addObject("error_changeAuthoritySelf", true);
+			// ユーザID
+			mv.addObject("user_id", form.getUser_id());
+			// ユーザ名
+			mv.addObject("user_name", form.getUser_name());
+			// パスワード
+			mv.addObject("password", form.getPassword());
+			// 権限ラジオボタン
+			mv.addObject("authority_radiobutton", getAuthorityRadiobutton());
+			// 正規／削除済ユーザラジオボタン
+			mv.addObject("live_del_radiobutton", getLiveDelRadiobutton());
+		}
+		
+		// フォーム入力値をセッションスコープにセット
+		session.setAttribute("userMasterUpdForm", form);
+		
+		// フォーム入力値
+		mv.addObject("userMasterUpdForm", form);
+		
+		// 一般ユーザを選択した場合
+		if (form.getAuthority_radiobutton()[0].equals("general")) {
+			mv.addObject("authority", "一般ユーザ");
+		// 管理者を選択した場合
+		} else {
+			mv.addObject("authority", "管理者");
+		}
+		
+		// 正規ユーザを選択した場合
+		if (form.getLive_del_radiobutton()[0].equals("live")) {
+			mv.addObject("live_del", "正規");
+		// 削除済ユーザを選択した場合
+		} else {
+			mv.addObject("live_del", "削除");
+		}
+		
+		// ユーザ名をModelAndViewにセット
+		ControllerUtil.setUserNameToModelAndView(session, mv);
+		mv.setViewName(toUrl);
+		return mv;	
+	}
+	
+	/**
+	 * ユーザメンテナンス更新確認画面中止ボタン押下時
+	 * @param form UserMasterUpdForm
+	 * @param session HttpSession
+	 * @param mv ModelAndView
+	 * @return ModelAndView
+	 */
+	@RequestMapping(value = "userMasterUpdConfirm/cancel", method = RequestMethod.GET)
+    private ModelAndView getUserMasterUpdConfirmCancel(@ModelAttribute UserMasterUpdForm form,
+    		HttpSession session, ModelAndView mv) {
+		// フォーム入力値をセッションスコープから取得
+		UserMasterUpdForm userMasterUpdFormSession = (UserMasterUpdForm) session.getAttribute("userMasterUpdForm");
+		
+		// ユーザID
+		mv.addObject("user_id", userMasterUpdFormSession.getUser_id());
+		// ユーザ名
+		mv.addObject("user_name", userMasterUpdFormSession.getUser_name());
+		// パスワード
+		mv.addObject("password", userMasterUpdFormSession.getPassword());
+		// 権限ラジオボタン
+		mv.addObject("authority_radiobutton", getAuthorityRadiobutton());
+		// 正規／削除済ユーザラジオボタン
+		mv.addObject("live_del_radiobutton", getLiveDelRadiobutton());
+		
+		// フォーム入力値をセッションスコープから取得
+		mv.addObject("userMasterUpdForm", session.getAttribute("userMasterUpdForm"));
+		
+		// ユーザ名をModelAndViewにセット
+		ControllerUtil.setUserNameToModelAndView(session, mv);
+		mv.setViewName("userMasterUpd");
+        return mv;
+    }
+	
+	/**
+	 * ユーザメンテナンス更新確認画面更新ボタン押下時
+	 * @param form UserMasterUpdForm
+	 * @param result BindingResult
+	 * @param session HttpSession
+	 * @param mv ModelAndView
+	 * @return ModelAndView
+	 */
+	@RequestMapping(value = "/userMasterUpd", method = RequestMethod.POST)
+	private ModelAndView postUserMasterUpd(@ModelAttribute @Validated UserMasterUpdForm form,
+			BindingResult result, HttpSession session, ModelAndView mv) {
+		String toUrl = "userMasterUpdResult";
+		
+		// フォーム入力値をセッションスコープから取得
+		form = (UserMasterUpdForm) session.getAttribute("userMasterUpdForm");
+		
+		// ユーザID
+		String user_id = form.getUser_id();
+		// ユーザ名
+		String user_name = form.getUser_name();
+		// 権限ラジオボタン
+		String[] authority_radiobutton = form.getAuthority_radiobutton();
+		
+		// ユーザを更新
+		if (userMasterService.updUser(user_id,
+				user_name,
+				form.getPassword(),
+				authority_radiobutton,
+				form.getLive_del_radiobutton()) != 1) {
+			mv.addObject("error", "処理に失敗しました。");
+			toUrl = "failure";
+		}
+		
+		// フォーム入力値
+		mv.addObject("userMasterUpdForm", form);
+		
+		// 一般ユーザを選択した場合
+		if (form.getAuthority_radiobutton()[0].equals("general")) {
+			mv.addObject("authority", "一般ユーザ");
+		// 管理者を選択した場合
+		} else {
+			mv.addObject("authority", "管理者");
+		}
+		
+		// 正規ユーザを選択した場合
+		if (form.getLive_del_radiobutton()[0].equals("live")) {
+			mv.addObject("live_del", "正規");
+		// 削除済ユーザを選択した場合
+		} else {
+			mv.addObject("live_del", "削除");
+		}
+		
+		// ログインユーザを更新した場合
+		if (session.getAttribute("login_user_id").equals(user_id)) {
+			// ユーザIDをセッションスコープにセット
+			session.setAttribute("login_user_id", user_id);
+			// ユーザ名をセッションスコープにセット
+			session.setAttribute("login_user_name", user_name);
+			// 権限をセッションスコープにセット
+			session.setAttribute("login_user_authority", authority_radiobutton[0].toUpperCase());
+		}
+		
+		// ユーザ名をModelAndViewにセット
+		ControllerUtil.setUserNameToModelAndView(session, mv);
+		mv.setViewName(toUrl);
+		return mv;	
+	}
 	
 	/**
 	 * 権限チェックボックスを取得する
@@ -280,7 +490,7 @@ public class UserMasterController {
 	
 	/**
 	 * 権限ラジオボタンを取得する
-	 * @return 権限チェックボックス
+	 * @return 権限ラジオボタン
 	 */
 	private Map<String, String> getAuthorityRadiobutton() {
 		Map<String, String> authorityRadiobutton = new LinkedHashMap<>();
@@ -298,5 +508,16 @@ public class UserMasterController {
 		liveDelCheckbox.put("live", "正規ユーザ");
 		liveDelCheckbox.put("del", "削除済ユーザ");
 		return liveDelCheckbox;
+	}
+	
+	/**
+	 * 正規ユーザ／削除ユーザラジオボタンを取得する
+	 * @return 正規ユーザ／削除ユーザラジオボタン
+	 */
+	private Map<String, String> getLiveDelRadiobutton() {
+		Map<String, String> liveDelRadiobutton = new LinkedHashMap<>();
+		liveDelRadiobutton.put("live", "正規ユーザ");
+		liveDelRadiobutton.put("del", "削除ユーザ");
+		return liveDelRadiobutton;
 	}
 }

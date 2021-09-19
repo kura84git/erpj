@@ -15,8 +15,8 @@
 				<a th:href="@{/userMasterReg}">登録</a>
 				<a th:href="@{/userMaster}">検索</a>
 			</div>
-			<div>データを登録しました。</div>
-			<table border="1" th:object="${userMasterRegForm}">
+			<div>データを更新しました。</div>
+			<table border="1" th:object="${userMasterUpdForm}">
 				<tr>
 					<th class="key-attr">ユーザID</th>
 					<td class="val-attr"><a th:text="*{user_id}" th:href="@{|/userMasterDetail/*{user_id}|}"></a></td>
@@ -31,6 +31,10 @@
 				<tr>
 					<th class="key-attr">権限</th>
 					<td th:text="${authority}" class="val-attr"></td>
+				</tr>
+				<tr>
+					<th class="key-attr">正規／削除</th>
+					<td th:text="${live_del}" class="val-attr"></td>
 				</tr>
 			</table>
 			<div class="top-footer"><div th:replace="footer :: footer"></div></div>

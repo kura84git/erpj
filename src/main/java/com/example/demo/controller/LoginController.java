@@ -60,15 +60,15 @@ public class LoginController {
 		// ユーザが存在する場合
 		} else {
 			// ユーザIDをセッションスコープにセット
-			session.setAttribute("user_id", user.getUser_id());
+			session.setAttribute("login_user_id", user.getUser_id());
 			// 権限をセッションスコープにセット
-			session.setAttribute("authority", user.getAuthority());
+			session.setAttribute("login_user_authority", user.getAuthority());
 
 			String user_name = user.getUser_name();
 			// ユーザ名をセッションスコープにセット
-			session.setAttribute("user_name", user_name);
+			session.setAttribute("login_user_name", user_name);
 
-			mv.addObject("user_name", user_name);
+			mv.addObject("login_user_name", user_name);
 			toUrl = "top";
 		}
 		

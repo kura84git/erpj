@@ -13,6 +13,6 @@ public class ControllerUtil {
 	 * @param mv ModelAndView
 	 */
 	protected static void setUserNameToModelAndView(HttpSession session, ModelAndView mv) {
-		mv.addObject("user_name", session.getAttribute("user_name"));
+		mv.addObject("login_user_name", session.getAttribute("login_user_name"));
 	}
 }

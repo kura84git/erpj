@@ -15,15 +15,14 @@
 				<a th:href="@{/userMasterReg}">登録</a>
 				<a th:href="@{/userMaster}">検索</a>
 			</div>
-			<div class="error-msg" th:if="${error_userExists}">ユーザが既に存在します。</div>
-			<form method="post" th:action="@{/userMasterRegConfirm}" th:object="${userMasterRegForm}">
+			<div class="error-msg" th:if="${error_changeAuthoritySelf}">自身を一般ユーザまたは削除ユーザに変更することはできません。</div>
+			<form method="post" th:action="@{/userMasterUpdConfirm}" th:object="${userMasterUpdForm}">
 			<table border="1">
 				<tr>
 					<th class="key-attr">ユーザID</th>
 					<td>
 						<div class="val-attr">
-						<input type="text" th:field="*{user_id}" name="user_id"><br/>
-						<span class="error-msg" th:if="${#fields.hasErrors('user_id')}" th:errors="*{user_id}">user_id error</span>
+						<input type="text" th:value="${user_id}" name="user_id" readonly="readonly"><br/>
 						</div>
 					</td>
 				</tr>
@@ -31,7 +30,7 @@
 					<th class="key-attr">ユーザ名</th>
 					<td>
 						<div class="val-attr">
-						<input type="text" th:field="*{user_name}" name="user_name"><br/>
+						<input type="text" th:value="${user_name}" name="user_name"><br/>
 						<span class="error-msg" th:if="${#fields.hasErrors('user_name')}" th:errors="*{user_name}">user_name error</span>
 						</div>
 					</td>
@@ -40,7 +39,7 @@
 					<th class="key-attr">パスワード</th>
 					<td>
 						<div class="val-attr">
-						<input type="password" th:field="*{password}" name="password"><br/>
+						<input type="password" th:value="${password}" name="password"><br/>
 						<span class="error-msg" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">password error</span>
 						</div>
 					</td>
@@ -50,6 +49,14 @@
 					<td>
 						<label th:each="item:${authority_radiobutton}">
 							<input type="radio" th:field="*{authority_radiobutton}" name="authority_radiobutton" th:value="${item.key}" th:text="${item.value}">
+						</label>
+					</td>
+				</tr>
+				<tr>
+					<th class="key-attr">正規／削除</th>
+					<td>
+						<label th:each="item:${live_del_radiobutton}">
+							<input type="radio" th:field="*{live_del_radiobutton}" name="live_del_radiobutton" th:value="${item.key}" th:text="${item.value}">
 						</label>
 					</td>
 				</tr>

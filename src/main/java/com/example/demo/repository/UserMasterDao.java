@@ -113,6 +113,9 @@ public class UserMasterDao {
 			}
 		}
 		
+		query.append("ORDER BY ");
+		query.append("	usr.user_id ");
+		
 		try {
 			List<Map<String, Object>> userList = jdbcTemplate.queryForList(query.toString(), args.toArray());
 			
@@ -316,5 +319,52 @@ public class UserMasterDao {
 		} catch (EmptyResultDataAccessException e) {
 			return null;
 		}
+	}
+	
+	/**
+	 * ユーザを更新する
+	 * @param user_id ユーザID
+	 * @param user_name ユーザ名
+	 * @param password　パスワード
+	 * @param authority_radiobutton 権限ラジオボタン
+	 * @param live_del_radiobutton 正規ユーザ／削除ユーザラジオボタン
+	 * @return 更新に成功した場合は1
+	 */
+	public int updUser(String user_id, String user_name, String password,
+			String[] authority_radiobutton, String[] live_del_radiobutton) {
+		List<String> args = new ArrayList<>();
+		
+		StringBuilder query = new StringBuilder();
+		query.append("UPDATE ");
+		query.append("	usr ");
+		query.append("SET ");
+		query.append("	user_name = ? ");
+		args.add(user_name);
+		query.append("	, password = ? ");
+		args.add(password);
+		
+		query.append("	, authority = ? ");
+		// 一般ユーザが選択されている場合
+		if (authority_radiobutton[0].equals("general")) {
+			args.add("GENERAL");
+		// 管理者が選択されている場合
+		} else {
+			args.add("ADMIN");
+		}
+		
+		// 正規ユーザが選択されている場合
+		if (live_del_radiobutton[0].equals("live")) {
+			query.append("	, del_flg = ? ");
+			args.add(user_id);
+		// 削除ユーザが選択されている場合
+		} else {
+			query.append("	, del_flg = NULL ");
+		}
+		
+		query.append("WHERE ");
+		query.append("	user_id = ? ");
+		args.add(user_id);
+		
+		return jdbcTemplate.update(query.toString(), args.toArray());
 	}
 }
